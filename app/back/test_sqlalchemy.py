@@ -50,3 +50,12 @@ class User(Base):
 user = User('lala','dadad')
 session.add(user)
 session.commit()
+
+ob = session.query(User).get(1)
+print(ob.__dict__)
+
+ob = session.query(User).all()
+print(ob)
+
+ob = session.query(User).filter_by(nombre='maty').first()
+print(ob.__dict__)
