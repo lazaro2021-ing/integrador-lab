@@ -4,4 +4,4 @@ pip install virtualenv
 viertual env
 
 INSTALL  PACKEGE
-pip install -r riquirements.txt
+pip install -r requirements.txt
