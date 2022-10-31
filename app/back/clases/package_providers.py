@@ -1,6 +1,6 @@
 from typing import List
-from app.back.clases.package_classifications import ClasificationType
-from app.back.clases.package_vehicle import VehicleType
+from package_classifications import ClasificationType
+from package_vehicle import VehicleType
 from package_vehicle import Vehicle
 from package_classifications import ServiceClassification
 
@@ -39,7 +39,7 @@ class ProvidedInstrument:
 class ServiceProvider:
     __name:str
     __country:Country
-    __instruments:List(ProvidedInstrument)=[]
+    __instruments:list[ProvidedInstrument]=[]
 
     def __init__(self,name,country:Country):
         self.__name=name
@@ -141,9 +141,6 @@ class ServiceProviderBuilder:
     def Build():
         pass
 
-
-
-
 if __name__ == "__main__":
     service_classification=ServiceClassification(ClasificationType.EXECUTIVE_CLASS)
     travel_cataratas=Travel("Cataratas",50000)
@@ -156,6 +153,6 @@ if __name__ == "__main__":
     provider=ServiceProviderBuilder()
     provider.CreateServiceProvider("Balori",Country("Argentina"))
     provider.BuidTravelInstrument("Cataratas",50000)
-
+    print(provider.__dict__)
 
 

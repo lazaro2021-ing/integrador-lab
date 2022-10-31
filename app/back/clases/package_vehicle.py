@@ -1,10 +1,10 @@
 from enum import Enum
 
 class VehicleType(Enum):
-    PLANE:1
-    CRUISE:2
-    BUS:3
-    TRAIN:4
+    PLANE=1
+    CRUISE=2
+    BUS=3
+    TRAIN=4
 
 class Vehicle:
     __type:VehicleType
