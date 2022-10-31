@@ -1,5 +1,3 @@
-from turtle import back
-from flask import Flask
 from sqlalchemy import create_engine,ForeignKey
 from sqlalchemy.engine import URL
 from sqlalchemy.orm import sessionmaker

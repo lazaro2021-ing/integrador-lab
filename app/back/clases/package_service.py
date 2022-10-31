@@ -1,6 +1,7 @@
 from package_classifications import ClasificationType
 from package_providers import ProvidedInstrument
 from package_classifications import ServiceClassification
+from typing import List
 
 class AbstractPackage:
     __classification:ServiceClassification
@@ -33,7 +34,7 @@ class AbstractService(AbstractPackage):
         return self.__instrument
 
 class CompositePackage(AbstractPackage):
-    __children:list(AbstractService)
+    __children:List(AbstractService)=[]
 
     def __init__(self, classification):
         super().__init__(classification)

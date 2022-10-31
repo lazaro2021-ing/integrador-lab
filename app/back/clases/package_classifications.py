@@ -7,12 +7,14 @@ class ClasificationType(Enum):
 
 class ServiceClassification:
     __charge:float
+    __classification:ClasificationType
     __classification_to_charge={ClasificationType.FIRST_CLASS    :1.45,
                                 ClasificationType.EXECUTIVE_CLASS:1.15,
                                 ClasificationType.ECONOMY_CLASS  :1.05}
 
     def __init__(self,classification:ClasificationType):
         self.__charge=self.__classification_to_charge[classification]
+        self.__classification=classification
 
     @property
     def charge(self):
