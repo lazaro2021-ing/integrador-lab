@@ -32,5 +32,18 @@ class AbstractService(AbstractPackage):
     def instrument(self):
         return self.__instrument
 
-class CompositePackage(AbstractService):
-    __list_abstract_package:list(AbstractPackage)
+class CompositePackage(AbstractPackage):
+    __children:list(AbstractService)
+
+    def __init__(self, classification):
+        super().__init__(classification)
+
+    def addService(self,service:AbstractService):
+        self.__children.append(service)
+
+    def removeService(self,service:AbstractService):
+        self.__children=[serv for serv in self.__children if serv!=service]
+
+    @property
+    def children(self):
+        return self.__children
