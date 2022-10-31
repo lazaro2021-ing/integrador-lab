@@ -14,7 +14,7 @@ database="integrador-lab-IV"
 driver="{SQL Server}"
 trusted_connection='yes'
 
-connection_string = f""" DRIVER={driver};
+connection_string = f"""DRIVER={driver};
                         SERVER={server};
                         DATABASE={database};
                         TRUSTED_CONNECTION={trusted_connection};
