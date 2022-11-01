@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.engine import URL
 from sqlalchemy.orm import sessionmaker
-from models.models import Base,ClassificationTypeModel,ClassificationModel,ProviderInstrumentModel,VehicleModel,TravelModel
+from models.models import Base,ClassificationTypeModel,ClassificationModel,ProviderInstrumentModel,VehicleModel,TravelModel,ExcursionModel,HotelModel
 from config import connection_string
 
 
@@ -43,4 +43,12 @@ session.commit()
 
 travel1=TravelModel(vehicle=vehicle1,provider=pi1)
 session.add(travel1)
+session.commit()
+
+exc1=ExcursionModel(nombre="Bariloche cerro tronador",legajo="1234",telefono="12165465",provider=pi1)
+session.add(exc1)
+session.commit()
+
+h1=HotelModel(calle="9 de julio",numero=1234,provider=pi1)
+session.add(h1)
 session.commit()

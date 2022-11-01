@@ -41,5 +41,21 @@ class TravelModel(Base):
     fk_provider = Column(Integer, ForeignKey("ProviderInstrument.id"))
     provider=relationship("ProviderInstrumentModel")
 
+class ExcursionModel(Base):
+    __tablename__ = 'Excursion'
+    id = Column(Integer, primary_key=True)
+    nombre = Column(String(50), nullable=False)
+    legajo = Column(String(50), nullable=False)
+    telefono = Column(String(50), nullable=False)
 
+    fk_provider = Column(Integer, ForeignKey("ProviderInstrument.id"))
+    provider=relationship("ProviderInstrumentModel")
 
+class HotelModel(Base):
+    __tablename__ = 'Hotel'
+    id = Column(Integer, primary_key=True)
+    calle = Column(String(50), nullable=False)
+    numero = Column(Integer, nullable=False)
+
+    fk_provider = Column(Integer, ForeignKey("ProviderInstrument.id"))
+    provider=relationship("ProviderInstrumentModel")
