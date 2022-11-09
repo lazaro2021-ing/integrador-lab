@@ -123,18 +123,26 @@ class ServiceProviderBuilder:
         self.__service_provider=ServiceProvider(name,country)
         return  self.__service_provider
 
-    def BuilLodgingInstrument(self,name:str,price:float)->ServiceProvider:
+    def BuilLodgingInstrument(self,name:str,price:float,calle:str,numero:int,clasification:ClasificationType)->ServiceProvider:
         hotel=Hotel(name,price)
+        hotel.serviceClassification=ServiceClassification(clasification)
+        hotel.direccion={"calle":calle,"numero":numero}
         self.__service_provider.addInstrument(hotel)
         return self.__service_provider
 
-    def BuildExcursionIntrument(self,name:str,price:float)->ServiceProvider:
+    def BuildExcursionIntrument(self,name:str,price:float,guia_nombre:str,guia_legajo:str,guia_telefono:str,clasification:ClasificationType)->ServiceProvider:
         excursion=Excursion(name,price)
+        excursion.serviceClassification=ServiceClassification(clasification)
+        excursion.nombre=guia_nombre
+        excursion.legajo=guia_legajo
+        excursion.telefono=guia_telefono
         self.__service_provider.addInstrument(excursion)
         return self.__service_provider
 
-    def BuidTravelInstrument(self,name:str,price:float)->ServiceProvider:
+    def BuidTravelInstrument(self,name:str,price:float,vehicle:Vehicle,clasification:ClasificationType)->ServiceProvider:
         travel=Travel(name,price)
+        travel.vehicle=vehicle
+        travel.serviceClassification=ServiceClassification(clasification)
         self.__service_provider.addInstrument(travel)
         return self.__service_provider
 
@@ -152,7 +160,7 @@ if __name__ == "__main__":
 
     provider=ServiceProviderBuilder()
     provider.CreateServiceProvider("Balori",Country("Argentina"))
-    provider.BuidTravelInstrument("Cataratas",50000)
+    provider.BuidTravelInstrument("Cataratas",25000,bus)
     print(provider.__dict__)
 
 

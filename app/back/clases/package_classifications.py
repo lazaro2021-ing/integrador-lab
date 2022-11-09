@@ -19,3 +19,8 @@ class ServiceClassification:
     @property
     def charge(self):
         return self.__charge
+
+    @property
+    def classification(self):
+        return self.__classification
+    

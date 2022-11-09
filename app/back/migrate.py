@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.engine import URL
 from sqlalchemy.orm import sessionmaker
-from models.models import Base,ClassificationTypeModel,ClassificationModel,ProviderInstrumentModel,VehicleModel,TravelModel,ExcursionModel,HotelModel
+from models.models import *
 from config import connection_string
 
 
@@ -33,9 +33,26 @@ c1 = ClassificationModel(charge=1.4,clasification=first)
 session.add(c1)
 session.commit()
 
-pi1=ProviderInstrumentModel(name="Cataratas",price=25000,clasification=c1)
+arg=CountryModel(nombre="Argentina")
+session.add(arg)
+session.commit()
+
+service_provider=ServiceProviderModel(nombre="LZR viajes",country=arg)
+session.add(service_provider)
+session.commit()
+
+pi1=ProviderInstrumentModel(name="Cataratas",price=25000,clasification=c1,service_provider=service_provider)
 session.add(pi1)
 session.commit()
+
+package=PackageModel(is_composite=True,clasification=c1)
+session.add(package)
+session.commit()
+
+ppim=PackageProviderInstrumentModel(provider_instrument=pi1,package=package)
+session.add(ppim)
+session.commit()
+
 
 vehicle1=VehicleModel(type=1,matricula="12345")
 session.add(vehicle1)
@@ -52,3 +69,5 @@ session.commit()
 h1=HotelModel(calle="9 de julio",numero=1234,provider=pi1)
 session.add(h1)
 session.commit()
+
+
