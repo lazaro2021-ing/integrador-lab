@@ -3,7 +3,7 @@ from sqlalchemy.engine import URL
 from sqlalchemy.orm import sessionmaker
 from models.models import *
 from config import connection_string
-
+from datetime import datetime
 
 connection_url = URL.create(
     "mssql+pyodbc", query={"odbc_connect": connection_string})
@@ -53,6 +53,28 @@ ppim=PackageProviderInstrumentModel(provider_instrument=pi1,package=package)
 session.add(ppim)
 session.commit()
 
+states={}
+for state_name in ["Created","Active","Completed","Canceled","Holded","Scheduled"]: 
+    states[state_name]=StateTypeModel(name=state_name)
+    session.add(states[state_name])
+    session.commit()
+
+'''
+ state = relationship("StateTypeModel")
+    name = Column(String(50), nullable=False)
+    date = Column(DateTime, nullable=False)
+    couses = Column(String(200), nullable=True)
+    date_begin = Column(DateTime, nullable=True)
+    date_end = Column(DateTime, nullable=True)
+    fk_package_provider_instrument= Column(Integer, ForeignKey("PackageProviderInstrument.id"))
+    package_provider_instrument = relationship("PackageProviderInstrumentModel")
+'''
+sm=StateModel(state=states["Created"],name="lzr",date=datetime.now(),package_provider_instrument=ppim)
+session.add(sm)
+session.commit()
+sm1=StateModel(state=states["Scheduled"],name="lzr",date=datetime.now(),package_provider_instrument=ppim)
+session.add(sm1)
+session.commit()
 
 vehicle1=VehicleModel(type=1,matricula="12345")
 session.add(vehicle1)
