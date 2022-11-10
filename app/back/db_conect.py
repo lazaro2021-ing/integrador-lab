@@ -4,7 +4,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.engine import URL
 from models.models import Base
 
-
 connection_url = URL.create(
     "mssql+pyodbc", query={"odbc_connect": connection_string})
 

@@ -18,6 +18,19 @@ class ClassificationModel(Base):
     fk_classification_type = Column(Integer, ForeignKey("ServiceClassificationType.id"))
     clasification = relationship("ClassificationTypeModel")
 
+class CountryModel(Base):
+    __tablename__ = 'Country'
+    id = Column(Integer, primary_key=True)
+    nombre = Column(String(100), nullable=False)
+
+class ServiceProviderModel(Base):
+    __tablename__ = 'ServiceProvider'
+    id = Column(Integer, primary_key=True)
+    nombre = Column(String(50), nullable=False)
+
+    fk_country = Column(Integer, ForeignKey("Country.id"))
+    country=relationship("CountryModel")
+
 class ProviderInstrumentModel(Base):
     __tablename__ = 'ProviderInstrument'
     id = Column(Integer, primary_key=True)
@@ -104,16 +117,5 @@ class HotelModel(Base):
     fk_provider = Column(Integer, ForeignKey("ProviderInstrument.id"))
     provider=relationship("ProviderInstrumentModel")
 
-class CountryModel(Base):
-    __tablename__ = 'Country'
-    id = Column(Integer, primary_key=True)
-    nombre = Column(String(100), nullable=False)
 
 
-class ServiceProviderModel(Base):
-    __tablename__ = 'ServiceProvider'
-    id = Column(Integer, primary_key=True)
-    nombre = Column(String(50), nullable=False)
-
-    fk_country = Column(Integer, ForeignKey("Country.id"))
-    country=relationship("CountryModel")
