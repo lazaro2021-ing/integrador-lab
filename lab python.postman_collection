@@ -1,0 +1,57 @@
+{
+	"info": {
+		"_postman_id": "e69ba059-914c-450a-91ec-129215e99322",
+		"name": "lab python",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11491192"
+	},
+	"item": [
+		{
+			"name": "allClassificationTypes",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "createClassificationType",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "allClasification",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/classification/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"classification",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createClassification",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
