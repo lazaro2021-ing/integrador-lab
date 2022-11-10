@@ -14,9 +14,10 @@ def get_clasification_types():
 
 @app.post("/classificationtypes/")
 def create_classification_types(type:ClassificationTypeD):
-    session.add(ClassificationTypeModel(type=type.type,charge=type.charge))
-    session.commit()
-    return type
+    cl_type=ClassificationTypeModel(type=type.type,charge=type.charge)
+    session.add(cl_type)
+    session.flush()
+    return cl_type
    
 #classification
 @app.get("/classification/", response_model=List[ClassificationD])
@@ -26,7 +27,9 @@ def get_clasification():
 
 @app.post("/classification/")
 def create_classification_types(type:ClassificationD):
-    cl=session.query(ClassificationTypeModel).filter_by(type=type.clasification.type).first()
-    session.add(ClassificationModel(clasification=cl,charge=cl.charge))
-    session.commit()
-    return type
+    cl_type=session.query(ClassificationTypeModel).filter_by(type=type.clasification.type).first()
+    cl=ClassificationModel(clasification=cl_type,charge=cl_type.charge)
+    session.add(cl)
+    session.flush()
+    
+    return cl
