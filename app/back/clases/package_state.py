@@ -10,7 +10,6 @@ class PackageState:
         self.__name=name
         self.__date=date
 
-
 class StatefullPackage:
     __states=[]#PackageState
 
@@ -46,6 +45,7 @@ class StatefullPackage:
         else:
             if state.__class__.__name__=="Created":
                 self.__states.append(state)
+
 class Created(PackageState):
     def __init__(self, name: str, date: datetime):
         super().__init__(name, date)
