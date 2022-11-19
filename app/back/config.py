@@ -2,7 +2,7 @@
 user="lzr"
 password="1522"
 server="DESKTOP-02KB195\SQLEXPRESS"
-database="integrador-lab-1"
+database="integrador-lab"
 driver="{SQL Server}"
 trusted_connection='yes'
 

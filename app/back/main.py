@@ -3,14 +3,18 @@ from models.models import *
 from db_conect import session
 from typing import List
 from schemas.schemas import *
-
+from sqlalchemy.sql import func
 app = FastAPI()
 
 #classification type
 @app.get("/classificationtypes/", response_model=List[ClassificationTypeD])
 def get_clasification_types():
-    records =session.query(ClassificationTypeModel).all()
-    return records
+    try:
+        records =session.query(ClassificationTypeModel).all()
+        return records
+    except:
+        session.rollback()
+        return {"errorCode":400,"message":"No se pudo obtener el listado"}
 
 @app.post("/classificationtypes/")
 def create_classification_types(type:ClassificationTypeD):
@@ -22,8 +26,12 @@ def create_classification_types(type:ClassificationTypeD):
 #classification
 @app.get("/classification/", response_model=List[ClassificationD])
 def get_clasification():
-    records =session.query(ClassificationModel).all()
-    return records
+    try:
+        records =session.query(ClassificationModel).all()
+        return records
+    except:
+        session.rollback()
+        return {"errorCode":400,"message":"No se pudo obtener el listado"}
 
 @app.post("/classification/")
 def create_classification(type:ClassificationD):
@@ -36,8 +44,13 @@ def create_classification(type:ClassificationD):
 #county
 @app.get("/country/", response_model=List[CountryD])
 def get_country():
-    records =session.query(CountryModel).all()
-    return records
+    
+    try:
+        records =session.query(CountryModel).all()
+        return records
+    except:
+        session.rollback()
+        return {"errorCode":400,"message":"No se pudo obtener el listado"}
 
 @app.post("/country/")
 def create_country(country:CountryD):
@@ -49,8 +62,12 @@ def create_country(country:CountryD):
 #serviceProvider(seria la agencia que brinda los servicios)
 @app.get("/serviceprovider/", response_model=List[ServiceProviderD])
 def get_service_provider():
-    records =session.query(ServiceProviderModel).all()
-    return records
+    try:
+        records =session.query(ServiceProviderModel).all()
+        return records
+    except:
+        session.rollback()
+        return {"errorCode":400,"message":"No se pudo obtener el listado"}
 
 @app.post("/serviceprovider/")
 def create_service_provider(s_p:ServiceProviderD):
@@ -64,8 +81,12 @@ def create_service_provider(s_p:ServiceProviderD):
 #PROVIDER INSTRUMENT
 @app.get("/providerinstrument/", response_model=List[ProviderInstrumentD])
 def get_provider_instrument():
-    records =session.query(ProviderInstrumentModel).all()
-    return records
+    try:
+        records =session.query(ProviderInstrumentModel).all()
+        return records
+    except:
+        session.rollback()
+        return {"errorCode":400,"message":"No se pudo obtener el listado"}
 
 
 @app.post("/providerinstrument/")
@@ -188,3 +209,78 @@ def get_travel():
     except:
         session.rollback()
         return {"errorCode":400,"message":"No se pudo obtener el listado"}
+
+#statetype
+@app.get("/statetype/", response_model=List[StateTypeModelD])
+def get_state_type():
+    try:
+        records =session.query(StateTypeModel).all()
+        return records
+    except:
+        session.rollback()
+        return {"errorCode":400,"message":"No se pudo obtener el listado"}
+
+@app.post("/statetype/")
+def create_state_type(statetype:StateTypeModelD):
+    try:
+        state_type=session.query(StateTypeModel).filter_by(name=statetype.name).first()
+        if state_type==None:
+            state_type=StateTypeModel(name=statetype.name)
+            session.add(state_type)
+            session.flush()
+        return state_type
+    except:
+        session.rollback()
+        return {"errorCode":400,"message":"No se pudo crear el state type"}
+
+
+#statetype
+@app.get("/package/", response_model=List[PackageModelDTO])
+def get_package():
+    try:
+        records =session.query(PackageModel).all()
+        return records
+    except:
+        session.rollback()
+        return {"errorCode":400,"message":"No se pudo obtener el listado"}
+
+@app.post("/package/")
+def create_package(package:PackageModelD):
+    try:
+        cl_type=session.query(ClassificationTypeModel).filter_by(type=package.clasification.clasification.type).first()
+        
+        cl=ClassificationModel(clasification=cl_type,charge=cl_type.charge)
+        session.add(cl)
+        session.flush()
+
+        package=PackageModel(is_composite=package.is_composite,clasification=cl)
+        session.add(package)
+        session.flush()
+
+        return package
+    except:
+        session.rollback()
+        return {"errorCode":400,"message":"No se pudo crear el package"}
+
+
+@app.post("/addproviderinstrument/")
+def add_provider_instrument(pi:PackageProviderInstrumentModelD):
+    print(pi)
+    try:
+        provider_i=session.query(ProviderInstrumentModel).filter_by(id=pi.id_provider_instrument).first()
+        package=session.query(PackageModel).filter_by(id=pi.id_package).first()
+        statetype=session.query(StateTypeModel).filter_by(name="Created").first()
+        print("state type",statetype.__dict__)
+        package_pi=PackageProviderInstrumentModel(provider_instrument=provider_i,package=package)
+        session.add(package_pi)
+        session.flush()
+
+        state=StateModel(state=statetype,name='Created',date=func.now(),package_provider_instrument=package_pi)
+        print(state.__dict__)
+        session.add(state)
+        session.flush()
+        print("lal",state.__dict__)
+        return package_pi
+    except:
+        session.rollback()
+        return {"errorCode":400,"message":"No se pudo crear el package"}

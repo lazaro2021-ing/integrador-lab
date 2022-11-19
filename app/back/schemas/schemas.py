@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from typing import ForwardRef, List, Optional
+from datetime import datetime
 
 class ClassificationTypeD(BaseModel):
     id:Optional[int]
@@ -89,5 +90,44 @@ class ExcursionProviderInstrumentD(BaseModel):
     class Config:
         orm_mode = True
 
+class StateTypeModelD(BaseModel):
+    id:Optional[int]
+    name:str
+    class Config:
+        orm_mode = True  
+
+class PackageModelD(BaseModel):
+    id:Optional[int]
+    is_composite:bool
+    clasification:ClassificationD=None
+    class Config:
+        orm_mode = True
+
+class PackageModelDTO(BaseModel):
+    id:Optional[int]
+    is_composite:bool
+    clasification:ClassificationD=None
+    provider_instruments:List[ProviderInstrumentD]
+    class Config:
+        orm_mode = True
+
+class PackageProviderInstrumentModelD(BaseModel):
+    id:Optional[int]
+    id_provider_instrument:int
+    id_package:int
+    class Config:
+        orm_mode = True
+
+class StateModelD(BaseModel):
+    id:Optional[int]
+    state:StateTypeModelD=None
+    name:str
+    date:datetime
+    couses:Optional[str]
+    date_begin:Optional[datetime]
+    date_end:Optional[datetime]
+    package_provider_instrument:PackageProviderInstrumentModelD=None
+    class Config:
+        orm_mode = True
 
 
